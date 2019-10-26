@@ -2,4 +2,7 @@
 
 export(ridgereg)
 export(visualize_airport_delays)
+import(dplyr)
+import(ggplot2)
+import(methods)
 import(nycflights13)

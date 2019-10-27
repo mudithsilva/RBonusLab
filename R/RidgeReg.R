@@ -32,6 +32,10 @@ ridgereg <- setRefClass("ridgereg",
 
                         initialize = function(formula = as.formula , data = as.data.frame, lambda = 0) {
 
+                          if (!is.data.frame(data)) {
+                            stop("Illegal data format!")
+                          }
+
                           X <- model.matrix(formula,data)
                           formula <<- formula
                           data <<- data

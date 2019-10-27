@@ -17,8 +17,10 @@ Imports:
     nycflights13,
     ggplot2,
     dplyr,
-    methods
+    methods,
+    MASS
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr

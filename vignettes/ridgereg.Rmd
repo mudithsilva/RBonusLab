@@ -20,28 +20,50 @@ knitr::opts_chunk$set(
 library(RBonusLab)
 library(caret)
 library(mlbench)
-```
-## How to use ridgereg function
-```{r ridgereg}
-data("iris")
-ridgereg(Petal.Length ~ Sepal.Width + Sepal.Length,data = iris)
+library(ggplot2)
 ```
 ## Using BostonHousing data
 ```{r BostonHousing}
 data("BostonHousing")
+housing <- BostonHousing
+str(housing)
+summary(housing)
+```
+## Data Cleaning
+```{r BostonHousing2}
+library("Amelia")
+#Check for any NA’s in the dataframe.
+missmap(housing,col=c('yellow','black'),y.at=1,y.labels='',legend=TRUE)
+
+```
+## Data Visualization with CorrPlots
+```{r Visualization}
+library("corrplot")
+library("dplyr")
+corrplot(cor(select(housing,-chas)))
+```
+
+```{r BostonHousingNext}
+
 partitioining <- createDataPartition(
-  y = BostonHousing$age,
+  y = BostonHousing$zn,
   ## the outcome data are needed
   p = .75,
   ## The percentage of data in the
   ## training set
   list = FALSE
 )
+#Spliting BostonHousing data into training and testing datasets
 training <- BostonHousing[ partitioining,]
 testing  <- BostonHousing[-partitioining,]
 nrow(training)
 nrow(testing)
 
+```
+## How to use ridgereg function
+```{r ridgereg}
+data("iris")
+ridgereg(Petal.Length ~ Sepal.Width + Sepal.Length,data = iris)
 ```
 ## using caret package
 ```{r caret}

@@ -18,7 +18,13 @@ Imports:
     ggplot2,
     dplyr,
     methods,
-    MASS
+    MASS,
+    caret,
+    mlbench,
+    Amelia,
+    corrplot,
+    caTools,
+    plotly
 Suggests: 
     knitr,
     rmarkdown,

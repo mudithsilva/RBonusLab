@@ -48,28 +48,36 @@ corrplot(cor(select(housing,-chas)))
 ```{r dataSpliting}
 library("caTools")
 set.seed(123)
-
 #Split the data , `split()` assigns a booleans to a new column based on the SplitRatio specified. 
-
 split <- sample.split(housing,SplitRatio =0.75)
-
-
 train <- subset(housing,split==TRUE)
 test <- subset(housing,split==FALSE)
 ```
 
-## Model Building and Training Using Forward Selection
+## Fitting ridge regression model Using Ridgereg With Four Parameters
+```{r ModelBuildingRidgereg}
+model <- ridgereg(formula = medv ~ crim + rm + tax + lstat, data = train)
+summary(model)
+#The model with three parameters
+model <- ridgereg(medv ~ crim + rm + tax, data = train)
+summary(model)
+#The model with two parameters
+model <- ridgereg(medv ~ crim + rm, data = train)
+summary(model)
+```
+
+## Model Building and Training Using Forward Selection and lm function
 ```{r ModelBuildingForward}
 model <- lm(medv ~ 1, data = train)
 step(model, direction = "forward", scope = formula(model))
 summary(model)
 ```
 
-## Model Building and Training
-```{r ModelBuilding}
-model <- lm(medv ~ crim + rm + tax + lstat, data = train)
-summary(model)
-```
+<!-- ## Model Building and Training -->
+<!-- ```{r ModelBuilding} -->
+<!-- model <- lm(medv ~ crim + rm + tax + lstat, data = train) -->
+<!-- summary(model) -->
+<!-- ``` -->
 
 ## Model Visualization  
 ```{r ModelVisualziation}
@@ -101,6 +109,10 @@ error <- test$medv-test$predicted.medv
 rmse <- sqrt(mean(error)^2)
 print(rmse)
 ```
+
+
+
+
 
 ## Using createDataPartition function to spilit data into training and testing datasets
 ```{r BostonHousingNext}

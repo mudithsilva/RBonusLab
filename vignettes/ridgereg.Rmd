@@ -58,6 +58,13 @@ train <- subset(housing,split==TRUE)
 test <- subset(housing,split==FALSE)
 ```
 
+## Model Building and Training Using Forward Selection
+```{r ModelBuildingForward}
+model <- lm(medv ~ 1, data = train)
+step(model, direction = "forward", scope = formula(model))
+summary(model)
+```
+
 ## Model Building and Training
 ```{r ModelBuilding}
 model <- lm(medv ~ crim + rm + tax + lstat, data = train)

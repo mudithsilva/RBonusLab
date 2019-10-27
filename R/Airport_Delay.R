@@ -26,7 +26,4 @@ visualize_airport_delays <- function() {
     geom_point()
 
   return(plot_data)
-
 }
-
-visualize_airport_delays()

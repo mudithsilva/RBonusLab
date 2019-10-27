@@ -21,6 +21,7 @@ library(RBonusLab)
 library(caret)
 library(mlbench)
 library(ggplot2)
+library(e1071)
 ```
 ## Using BostonHousing data  
 ```{r BostonHousing}
@@ -170,4 +171,12 @@ nrow(testing)
 #   ## added:
 #   tuneLength = 15
 # )
+```
+## Find the best hyperparameter value for λ using 10-fold cross-validation on the training set
+
+```{r training}
+
+mod <- trainControl(method = "repeatedcv", number = 10, repeats = 10)
+
+result <- train(Class ~., data = training,method = "pls",trControl = mod)
 ```

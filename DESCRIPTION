@@ -24,7 +24,8 @@ Imports:
     Amelia,
     corrplot,
     caTools,
-    plotly
+    plotly,
+    e1071
 Suggests: 
     knitr,
     rmarkdown,

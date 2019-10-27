@@ -177,6 +177,4 @@ nrow(testing)
 ```{r training}
 
 mod <- trainControl(method = "repeatedcv", number = 10, repeats = 10)
-
-result <- train(Class ~., data = training,method = "pls",trControl = mod)
 ```

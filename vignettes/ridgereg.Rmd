@@ -26,6 +26,23 @@ library(mlbench)
 data("iris")
 ridgereg(Petal.Length ~ Sepal.Width + Sepal.Length,data = iris)
 ```
+## Using BostonHousing data
+```{r BostonHousing}
+data("BostonHousing")
+partitioining <- createDataPartition(
+  y = BostonHousing$age,
+  ## the outcome data are needed
+  p = .75,
+  ## The percentage of data in the
+  ## training set
+  list = FALSE
+)
+training <- BostonHousing[ partitioining,]
+testing  <- BostonHousing[-partitioining,]
+nrow(training)
+nrow(testing)
+
+```
 ## using caret package
 ```{r caret}
 data(Sonar)

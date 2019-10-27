@@ -22,27 +22,29 @@ library(caret)
 library(mlbench)
 library(ggplot2)
 ```
-## Using BostonHousing data
+## Using BostonHousing data  
 ```{r BostonHousing}
 data("BostonHousing")
 housing <- BostonHousing
 str(housing)
 summary(housing)
 ```
-## Data Cleaning
+## Data Cleaning  
 ```{r BostonHousing2}
 library("Amelia")
 #Check for any NA’s in the dataframe.
 missmap(housing,col=c('yellow','black'),y.at=1,y.labels='',legend=TRUE)
 
 ```
-## Data Visualization with CorrPlots
+
+## Data Visualization with CorrPlots  
 ```{r Visualization}
 library("corrplot")
 library("dplyr")
 corrplot(cor(select(housing,-chas)))
 ```
-## Spiliting data into training and testing
+
+## Spiliting data into training and testing  
 ```{r dataSpliting}
 library("caTools")
 set.seed(123)
@@ -55,12 +57,14 @@ split <- sample.split(housing,SplitRatio =0.75)
 train <- subset(housing,split==TRUE)
 test <- subset(housing,split==FALSE)
 ```
-## Model Building
+
+## Model Building and Training
 ```{r ModelBuilding}
 model <- lm(medv ~ crim + rm + tax + lstat, data = train)
 summary(model)
 ```
-## Model Visualization
+
+## Model Visualization  
 ```{r ModelVisualziation}
 res <- residuals(model)
 # Convert residuals to a DataFrame 
@@ -69,7 +73,29 @@ ggplot(res,aes(res)) +  geom_histogram(fill='blue',alpha=0.5)
 plot(model)
 ```
 
+## Testing the model using our testing dataset
+```{r ModelTesting}
+library("plotly")
+test$predicted.medv <- predict(model,test)
+pl1 <-test %>% 
+  ggplot(aes(medv,predicted.medv)) +
+  geom_point(alpha=0.5) + 
+  stat_smooth(aes(colour='black')) +
+  xlab('Actual value of medv') +
+  ylab('Predicted value of medv')+
+  theme_bw()
 
+ggplotly(pl1)
+```
+
+## Model Assessment
+```{r ModelAssessment}
+error <- test$medv-test$predicted.medv
+rmse <- sqrt(mean(error)^2)
+print(rmse)
+```
+
+## Using createDataPartition function to spilit data into training and testing datasets
 ```{r BostonHousingNext}
 
 partitioining <- createDataPartition(
